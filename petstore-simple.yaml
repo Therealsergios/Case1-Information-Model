@@ -37,3 +37,4 @@ components:
     apiKey:
       type: http
       scheme: basic
+      
