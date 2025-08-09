@@ -1,0 +1,82 @@
+@startuml
+' Участники системы
+actor User
+participant "Integration Service IS" as IS
+participant "API Gateway" as APIG
+participant "Export System" as Export
+database "Export System DB" as ExportDB
+participant "Import System" as Import
+database "Import System DB" as ImportDB
+participant "Token Service" as Token
+
+== Шаг 1: Запуск и получение данных из Export System ==
+
+User -> IS : Запуск сценария синхронизации
+activate IS
+
+IS -> Token : Получить access/refresh токен
+activate Token
+Token --> IS : Токен авторизации
+deactivate Token
+
+IS -> APIG : Запрос перечня объектов (с токеном)
+activate APIG
+APIG -> Export : Получить список объектов нужного класса
+activate Export
+
+alt Объекты найдены
+    Export -> ExportDB : Запрос значений атрибутов (JSON)
+    activate ExportDB
+    ExportDB --> Export : JSON с атрибутами
+    deactivate ExportDB
+
+    Export --> APIG : Ответ с JSON-объектами
+    APIG --> IS : Передача JSON с данными объектов
+    deactivate APIG
+
+    == Шаг 2: Отправка данных в Import System ==
+
+    IS -> Token : Получить токен для импорта
+    activate Token
+    Token --> IS : Токен авторизации
+    deactivate Token
+
+    IS -> APIG : Отправка JSON с атрибутами объектов
+    activate APIG
+    APIG -> Import : Передача данных на импорт
+    activate Import
+
+    Import -> ImportDB : Сохранение значений в БД
+    activate ImportDB
+    ImportDB --> Import : OK
+    deactivate ImportDB
+
+    Import --> APIG : Статус 200 OK
+    deactivate Import
+    APIG --> IS : Статус 200 OK
+    deactivate APIG
+
+    IS --> User : Импорт завершён успешно
+    deactivate IS
+
+    opt Показать журнал операций
+        User -> IS : Показать журнал
+        activate IS
+        IS --> User : Журнал операций
+        deactivate IS
+    end
+
+else Объекты не найдены
+    activate Export
+    Export --> APIG : Ошибка: объекты не найдены
+    deactivate Export
+
+    activate APIG
+    APIG --> IS : Сообщение об ошибке
+    deactivate APIG
+    
+    activate IS
+    IS --> User : Ошибка: объекты не найдены
+    deactivate IS
+end
+@enduml
