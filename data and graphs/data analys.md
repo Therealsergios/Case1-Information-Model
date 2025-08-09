@@ -54,7 +54,7 @@ order by date
 
 Полученный график
 
-![График - создании объектов]()
+![График - создании объектов](https://github.com/Therealsergios/Case1-Information-Model/blob/main/data%20and%20graphs/objects_create.png)
 
 2. Созданные объекты по рабочим часам
 
@@ -104,7 +104,7 @@ order by time
 
 Полученный график
 
-![График - создании объектов по времени]()
+![График - создании объектов по времени](https://github.com/Therealsergios/Case1-Information-Model/blob/main/data%20and%20graphs/objects_by_time.png)
 
 3. Созданные объекты по пользователям и доля архивированных объектов
 
@@ -160,10 +160,10 @@ group by 4
 
 Полученные графики
 
-![Количество созданных объектов по пользователям]()
+![Количество созданных объектов по пользователям](https://github.com/Therealsergios/Case1-Information-Model/blob/main/data%20and%20graphs/create_by_user.png)
 
-![Доля архивированных объектов]()
+![Доля архивированных объектов](https://github.com/Therealsergios/Case1-Information-Model/blob/main/data%20and%20graphs/arch_rate.png)
 
 4. Итоговая витрина данных
 
-![Витрина данных]()
+![Витрина данных](https://github.com/Therealsergios/Case1-Information-Model/blob/main/data%20and%20graphs/data_presentation.png)
