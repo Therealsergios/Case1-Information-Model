@@ -4,13 +4,13 @@
 
 На диаграмме на верхнем уровне показаны взаимодействия пользователя и PDM системы
 
-![Диаграмма use case]()
+![Диаграмма use case](https://github.com/Therealsergios/Case1-Information-Model/blob/main/diagrams/UML%20use%20case%20diagram.png)
 
 2. State diagram
 
 На диаграмме показаны переходные процессы и состояния бизнес сущностей: "Пользователь", "Объект", "API", "Токен"
 
-![Диаграмма state]()
+![Диаграмма state](https://github.com/Therealsergios/Case1-Information-Model/blob/main/diagrams/UML%20state.png)
 
 3. Sequence diagram
 
@@ -19,13 +19,13 @@
 
 ![Диаграмма sequence]()
 
-![UML код диаграммы Sequence]()
+![UML код диаграммы Sequence](https://github.com/Therealsergios/Case1-Information-Model/blob/main/diagrams/Sequence.png)
 
 4. C4 diagram
 
 На диаграмме описана работа backend веб приложения PDM системы в части создания нового объекта в системе
 
-![Диаграмма C4]()
+![Диаграмма C4](https://github.com/Therealsergios/Case1-Information-Model/blob/main/diagrams/C4%20diagram.png)
 
 5. Укрупненная схема обогощения данными
 
