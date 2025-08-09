@@ -17,9 +17,9 @@
 На диаграмме показаны взаимодецствия между объектами систем и последовательности взаимодействия. 
 Описан процесс принудительного получения данных PDM системой используя интерфейс интеграционного сервиса
 
-![Диаграмма sequence]()
+![Диаграмма sequence](https://github.com/Therealsergios/Case1-Information-Model/blob/main/diagrams/Sequence.png)
 
-![UML код диаграммы Sequence](https://github.com/Therealsergios/Case1-Information-Model/blob/main/diagrams/Sequence.png)
+[UML код диаграммы Sequence](https://github.com/Therealsergios/Case1-Information-Model/blob/main/diagrams/uml%20code.txt#L1C1-L82C8)
 
 4. C4 diagram
 
