@@ -1,0 +1,164 @@
+openapi: 3.0.3
+info:
+  title: Integration Service API
+  description: REST API для интеграции между системой 1 и системой 2 по UUID-ключам
+  version: 1.0.0
+
+servers:
+  - url: https://pdm-system.com/api/system
+    description: Система 1 (внутренняя)
+  - url: https://erp-system.com/api/system
+    description: Система 2 (внешняя)
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    UUIDList:
+      type: array
+      items:
+        type: string
+        format: uuid
+
+    AttributeRequest:
+      type: object
+      additionalProperties:
+        type: array
+        items:
+          type: string
+
+    AttributeResponse:
+      type: object
+      additionalProperties:
+        type: object
+        additionalProperties: {}
+
+    AttributeData:
+      type: object
+      properties:
+        experiment_type:
+          type: string
+        ex_pressure:
+          type: number
+        exp_pressure:
+          type: number
+        work_pressure:
+          type: number
+        inv_num:
+          type: number
+        pipe_level:
+          type: number
+        environment_name:
+          type: string
+        rev_period:
+          type: number
+        work_temp:
+          type: number
+
+    UUIDAttributeMap:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/AttributeData'
+
+security:
+  - bearerAuth: []
+
+paths:
+
+  /classes/objects:
+    get:
+      summary: Получение списка UUID из системы 1
+      operationId: getUuidsFromSystem1
+      tags: [System 1]
+      servers:
+        - url: https://pdm-system.com/api/system
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Список UUID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UUIDList'
+        '500':
+          description: Ошибка подключения
+
+    post:
+      summary: Поиск UUID-объектов в системе 2
+      operationId: searchUuidsInSystem2
+      tags: [System 2]
+      servers:
+        - url: https://erp-system.com/api/system
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UUIDList'
+      responses:
+        '200':
+          description: Найденные UUID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UUIDList'
+        '400':
+          description: UUID не найдены
+        '500':
+          description: Ошибка подключения
+
+  /objects/attributes:
+    put:
+      summary: Обновление данных объекта в системе 1
+      operationId: updateAttributesInSystem1
+      tags: [System 1]
+      servers:
+        - url: https://pdm-system.com/api/system
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UUIDAttributeMap'
+      responses:
+        '200':
+          description: Успешное обновление
+        '400':
+          description: UUID не найден
+        '500':
+          description: Внутренняя ошибка сервера
+
+    post:
+      summary: Получение атрибутов объектов по UUID из системы 2
+      operationId: getAttributesFromSystem2
+      tags: [System 2]
+      servers:
+        - url: https://erp-system.com/api/system
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AttributeRequest'
+      responses:
+        '200':
+          description: Данные объектов
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttributeResponse'
+        '400':
+          description: Ничего не найдено
+        '500':
+          description: Ошибка подключения
